@@ -14,5 +14,5 @@ jobs:
         uses: actions/setup-go@v2
       - name: Build
         run: |
-          CGO_ENABLED=1 GOOS=linux GOARCH=arm64 go build -v -a -o out/move_srt
+          CGO_ENABLED=1 GOOS=linux GOARCH=arm64 go build -v -o out/move_srt
       # - name: Upload
