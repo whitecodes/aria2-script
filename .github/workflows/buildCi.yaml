@@ -26,5 +26,5 @@ jobs:
         with:
           draft: true
           tag_name: '$(($RANDOM))'
-          asset_files: '/out/*'
+          asset_files: './out'
 
