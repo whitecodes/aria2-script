@@ -7,8 +7,6 @@ on:
 jobs:
   Build:
     runs-on: ubuntu-latest
-    env: 
-      SHA8: ${GITHUB_SHA::8}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -17,15 +15,12 @@ jobs:
       - name: Build
         run: |
           CGO_ENABLED=1 GOOS=linux GOARCH=arm64 go build -v -o out/move_srt
-      # - name: Set Release env
-      #   run: |
-      #     echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
       - name: Create Release With Asset
         uses: Hs1r1us/Release-AIO@v1.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           draft: false
-          tag_name: $env:SHA8
+          tag_name: $env:GITHUB_SHA
           asset_files: './out'
 
