@@ -13,4 +13,4 @@ jobs:
         uses: actions/setup-go@v2
       - name: Set env
         run: |
-          CGO_ENABLED=1 GOOS=linux GOARCH=arm64 go build
+          CGO_ENABLED=1 GOOS=linux GOARCH=arm64 go build -v -a -o out/move_srt
