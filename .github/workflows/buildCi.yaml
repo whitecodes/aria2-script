@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - '**.go'
+      - '**.yaml'
 jobs:
   Build:
     runs-on: ubuntu-latest

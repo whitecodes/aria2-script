@@ -18,6 +18,7 @@ func Test_main(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			os.Args[1] = tt.name
 			main()
+			// todo: check the result
 		})
 	}
 }
