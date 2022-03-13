@@ -15,10 +15,18 @@ jobs:
       - name: Build
         run: |
           CGO_ENABLED=1 GOOS=linux GOARCH=arm64 go build -v -o out/move_srt
-      - name: Release
-        uses: elgohr/Github-Release-Action@master
+      - name: Set Release env
+        run: |
+          echo "${{secrets.GITHUB_TOKEN}}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          git config --global user.email "whitemailg@gmail.com"
+          git config --global user.name "white"
+      - name: Create Release With Asset
+        uses: Hs1r1us/Release-AIO@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          args: Auto Release
+          tag_name: ${{ github.ref }}
+          asset_files: './out/*'
 
