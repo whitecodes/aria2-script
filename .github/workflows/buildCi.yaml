@@ -25,6 +25,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: '$env.SHA8'
+          tag_name: $SHA8
           asset_files: './out'
 
