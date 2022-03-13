@@ -17,14 +17,13 @@ jobs:
           CGO_ENABLED=1 GOOS=linux GOARCH=arm64 go build -v -o out/move_srt
       - name: Set Release env
         run: |
-          pwd
-          ls './out'
+          echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
       - name: Create Release With Asset
         uses: Hs1r1us/Release-AIO@v1.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           draft: true
-          tag_name: '$(($RANDOM))'
+          tag_name: ${{ steps.vars.outputs.sha_short }}
           asset_files: './out'
 
