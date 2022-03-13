@@ -12,6 +12,7 @@ jobs:
         uses: actions/checkout@v3
       - name: Setup Go
         uses: actions/setup-go@v2
-      - name: Set env
+      - name: Build
         run: |
           CGO_ENABLED=1 GOOS=linux GOARCH=arm64 go build -v -a -o out/move_srt
+      # - name: Upload
