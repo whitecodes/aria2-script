@@ -1,0 +1,19 @@
+name: Build for ARM64
+on: 
+  push:
+    paths:
+      - '**.go'
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Setup Go
+        uses: actions/setup-go@v2
+      - name: Set env
+        run: |
+          CGO_ENABLED=1 GOOS=linux GOARCH=arm64 go build
+  
+
+
