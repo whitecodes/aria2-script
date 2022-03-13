@@ -15,4 +15,10 @@ jobs:
       - name: Build
         run: |
           CGO_ENABLED=1 GOOS=linux GOARCH=arm64 go build -v -o out/move_srt
-      # - name: Upload
+      - name: Release
+        uses: elgohr/Github-Release-Action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+        with:
+          args: Auto Release
+
