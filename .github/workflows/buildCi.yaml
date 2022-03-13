@@ -23,7 +23,7 @@ jobs:
           git config --global user.email "whitemailg@gmail.com"
           git config --global user.name "white"
       - name: Create Release With Asset
-        uses: Hs1r1us/Release-AIO@v1
+        uses: Hs1r1us/Release-AIO@v1.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
