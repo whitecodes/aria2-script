@@ -7,6 +7,8 @@ on:
 jobs:
   Build:
     runs-on: ubuntu-latest
+    env: 
+      SHA8: ${GITHUB_SHA::8}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -24,6 +26,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           draft: true
-          tag_name: '${{ GITHUB_SHA }}'
+          tag_name: '$env.SHA8'
           asset_files: './out'
 
