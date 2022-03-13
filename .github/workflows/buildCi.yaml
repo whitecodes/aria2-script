@@ -17,12 +17,14 @@ jobs:
           CGO_ENABLED=1 GOOS=linux GOARCH=arm64 go build -v -o out/move_srt
       - name: Set Release env
         run: |
-          
+          pwd
+          ls './out/*'
       - name: Create Release With Asset
         uses: Hs1r1us/Release-AIO@v1.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
+          draft: true
           tag_name: 'inherit'
           asset_files: './out/*'
 
