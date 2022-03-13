@@ -45,6 +45,7 @@ func main() {
 			subFilename := subFile.Name()
 			if strings.HasPrefix(subFilename, "34_Chinese") {
 				os.Rename(rootPath+"/"+subDir+"/"+file+"/"+subFilename, rootPath+"/"+file+".chs.srt")
+				break
 			}
 		}
 	}
