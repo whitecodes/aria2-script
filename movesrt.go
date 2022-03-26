@@ -8,6 +8,10 @@ import (
 )
 
 func main() {
+	if len(os.Args) < 2 {
+		log.Println("Usage: movesrt <path>")
+		os.Exit(1)
+	}
 	if os.Args[1] == "" {
 		log.Println("must specify a path")
 		os.Exit(1)
