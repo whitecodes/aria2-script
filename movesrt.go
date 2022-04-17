@@ -20,7 +20,7 @@ func main() {
 	files, err := ioutil.ReadDir(rootPath)
 	if err != nil {
 		log.Printf("error reading directory: %v", err)
-		panic(err)
+		os.Exit(1)
 	}
 	videoFiles := make([]string, 0)
 	for _, file := range files {
