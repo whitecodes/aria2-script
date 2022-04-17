@@ -101,7 +101,7 @@ func renameFile(files []string, name string, rootPath string) string {
 		oldfilename := rootPath + "/" + file + ".mp4"
 		err := os.Rename(oldfilename, filename)
 		if nil == err {
-			log.Printf("rename %s to %s %s\n", oldfilename, filename, err)
+			log.Fatalf("rename %s to %s %s\n", oldfilename, filename, err)
 		}
 		log.Printf("rename %s to %s\n", oldfilename, filename)
 	}
