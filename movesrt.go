@@ -4,6 +4,8 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"path"
+	"strconv"
 	"strings"
 )
 
@@ -15,6 +17,10 @@ func main() {
 	if os.Args[1] == "" {
 		log.Println("must specify a path")
 		os.Exit(1)
+	}
+	var dramaName string
+	if len(os.Args) == 3 {
+		dramaName = os.Args[2]
 	}
 	rootPath := os.Args[1]
 	files, err := ioutil.ReadDir(rootPath)
@@ -35,6 +41,10 @@ func main() {
 	}
 
 	log.Printf("found %d video files\n", len(videoFiles))
+	if dramaName == "" {
+		dramaName = path.Base(rootPath)
+	}
+	dramaName = renameFile(videoFiles, dramaName, rootPath)
 	var subDir string
 	for _, dir := range files {
 		if !dir.IsDir() {
@@ -49,7 +59,7 @@ func main() {
 	for _, file := range videoFiles {
 		subFiles, err := ioutil.ReadDir(rootPath + "/" + subDir + "/" + file)
 		if err != nil {
-			log.Printf("error reading directory: %v\n", err)
+			// log.Printf("error reading directory: %v\n", err)
 			log.Printf("skipping %s\n", file)
 			continue
 		}
@@ -68,4 +78,32 @@ func main() {
 			log.Printf("no Chinese subtitle found for %s\n", file)
 		}
 	}
+}
+
+// 修改文件名，方便Jellyfin解析
+func renameFile(files []string, name string, rootPath string) string {
+	name = strings.ReplaceAll(name, "】【", ".")
+	name = strings.ReplaceAll(name, "】", ".")
+	name = strings.ReplaceAll(name, "【", "")
+	name = strings.ReplaceAll(name, "][", ".")
+	name = strings.ReplaceAll(name, "]", ".")
+	name = strings.ReplaceAll(name, "[", "")
+	name = strings.ReplaceAll(name, "\"", "")
+	log.Printf("drama name: %s\n", name)
+	var indexName string
+	for index, file := range files {
+		if strings.HasSuffix(name, ".") {
+			indexName = "E" + strconv.Itoa(index+1)
+		} else {
+			indexName = ".E" + strconv.Itoa(index+1)
+		}
+		filename := rootPath + "/" + name + indexName + ".mp4"
+		oldfilename := rootPath + "/" + file + ".mp4"
+		err := os.Rename(oldfilename, filename)
+		if nil == err {
+			log.Printf("rename %s to %s %s\n", oldfilename, filename, err)
+		}
+		log.Printf("rename %s to %s\n", oldfilename, filename)
+	}
+	return name
 }
